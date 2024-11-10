@@ -4,6 +4,7 @@ const cors = require("cors");
 const dummy = require("./Schema/dummy");
 const axios = require("axios");
 const mongoose = require("mongoose");
+const User_lists = require("./Schema/User");
 
 require("./database/database");
 
@@ -22,9 +23,9 @@ app.get("/hello", async (req, res) => {
 
 ///////-----------post api---------
 
-app.post("/post", async (req, res) => {
+app.post("/post-user", async (req, res) => {
   try {
-    const data = new dummy(req.body);
+    const data = new User_lists(req.body);
     await data.save();
     res.status(200).send(data);
   } catch (error) {
@@ -35,10 +36,10 @@ app.post("/post", async (req, res) => {
 
 ///////-----------get all api---------
 
-app.get("/get", async (req, res) => {
+app.get("/get-user", async (req, res) => {
   try {
-    const data = await dummy.find();
-    res.status(200).send(data);
+    const data = await User_lists.find();
+    res.status(200).send(data.reverse());
   } catch (error) {
     console.log(error);
     res.send(error);
@@ -64,7 +65,9 @@ app.put("/update/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const newData = req.body;
-    const updatedData = await dummy.findByIdAndUpdate(id, newData, { new: true });
+    const updatedData = await dummy.findByIdAndUpdate(id, newData, {
+      new: true,
+    });
     res.status(200).send(updatedData);
   } catch (error) {
     console.log(error);
