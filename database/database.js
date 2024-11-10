@@ -1,12 +1,17 @@
-const mongoose = require("mongoose")
-mongoose.connect(
-"mongodb+srv://saurabh931:yadav__123@saurabhdb.ofmpoio.mongodb.net/?retryWrites=true&w=majority",
+const mongoose = require("mongoose");
+require("dotenv").config();
+mongoose
+  .connect(
+    process.env.Mongodb_url,
 
     {
-    useNewUrlParser:true,
-    useUnifiedTopology:true
-}).then(()=>{
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
+  .then(() => {
     console.log("connection is successfull with Database");
-}).catch((e)=>{
-    console.log("Could not connected with Database",e);
-})
+  })
+  .catch((e) => {
+    console.log("Could not connected with Database", e);
+  });
